@@ -30,9 +30,7 @@ final class CarsCatalogController: UIViewController {
         mainView.tableView.dataSource = self
         mainView.tableView.delegate = self
     }
-
     
-
 }
 
 extension CarsCatalogController: UITableViewDataSource, UITableViewDelegate {
@@ -55,18 +53,30 @@ extension CarsCatalogController: UITableViewDataSource, UITableViewDelegate {
         250
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let vc = DetailController()
-//        vc.task = tasks[indexPath.item]
+        let vc = CarsDetailController()
+        vc.car = cars[indexPath.item]
 //        vc.mainView.delegate = self
-//        self.present(vc, animated: true)
-        print("\(indexPath.row)")
-        
+        vc.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, _ in
-            print(indexPath.row)
-            self.cars.remove(at: indexPath.row)
+            let actionSheet = UIAlertController(title: "Are You shure?",
+                                                message: "Do you want to delete a car?",
+                                                preferredStyle: .actionSheet)
+            
+            let yesAction = UIAlertAction(title: "Yes", style: .destructive) { _ in
+                self.cars.remove(at: indexPath.row)
+                self.dismiss(animated: true)
+            }
+            
+            let noAction = UIAlertAction(title: "No", style: .cancel)
+            
+            actionSheet.addAction(yesAction)
+            actionSheet.addAction(noAction)
+            
+            self.present(actionSheet, animated: true)
         }
     
         let config = UISwipeActionsConfiguration(actions: [deleteAction])

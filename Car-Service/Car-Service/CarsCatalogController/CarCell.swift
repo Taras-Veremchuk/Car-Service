@@ -9,7 +9,7 @@ import UIKit
 
 final class CarCell: UITableViewCell {
     static let reuseID = "CarCell"
-    private let carImage = UIImageView(
+    private let carImageView = UIImageView(
         customImage: .opel, contentMode: .scaleAspectFill, cornerRadius: 24)
     private let titleLabel = UILabel(fontSize: 28, isBold: true)
     private let containerView = UIView()
@@ -28,7 +28,7 @@ final class CarCell: UITableViewCell {
     
     private func setViews() {
         backgroundColor = .clear
-        carImage.clipsToBounds = true
+        carImageView.clipsToBounds = true
         containerView.backgroundColor = .bgCell
         containerView.layer.cornerRadius = 24
         containerView.clipsToBounds = true
@@ -51,20 +51,21 @@ final class CarCell: UITableViewCell {
             titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10)
         ])
         
-        containerView.addSubview(carImage)
-        carImage.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(carImageView)
+        carImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            carImage.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
-            carImage.leftAnchor.constraint(equalTo: containerView.leftAnchor),
-            carImage.rightAnchor.constraint(equalTo: containerView.rightAnchor),
-            carImage.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+            carImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
+            carImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor),
+            carImageView.rightAnchor.constraint(equalTo: containerView.rightAnchor),
+            carImageView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
     }
     
     func setupCell(car: Cars) {
         self.id = car.id
         titleLabel.text = "\(car.title), \(car.year)"
-        carImage.image = UIImage(named: car.imgTitle)
+        carImageView.image = UIImage(named: car.images[0])
+        
     }
     
 }
