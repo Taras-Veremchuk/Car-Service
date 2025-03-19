@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8EB4EEF42D8B5726005DCCE5 /* CarInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB4EEF32D8B5726005DCCE5 /* CarInfoView.swift */; };
+		8EB4EEF62D8B6400005DCCE5 /* UIStackView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB4EEF52D8B6400005DCCE5 /* UIStackView+Ext.swift */; };
 		8EBC0C602D88B6DF003243F2 /* ImgCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBC0C5F2D88B6DF003243F2 /* ImgCell.swift */; };
 		8EEFB4402D836E8A00B590E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEFB4382D836E8A00B590E9 /* AppDelegate.swift */; };
 		8EEFB4412D836E8A00B590E9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEFB43D2D836E8A00B590E9 /* SceneDelegate.swift */; };
@@ -26,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8EB4EEF32D8B5726005DCCE5 /* CarInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarInfoView.swift; sourceTree = "<group>"; };
+		8EB4EEF52D8B6400005DCCE5 /* UIStackView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Ext.swift"; sourceTree = "<group>"; };
 		8EBC0C5F2D88B6DF003243F2 /* ImgCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgCell.swift; sourceTree = "<group>"; };
 		8EEFB3E92D836C5800B590E9 /* Car-Service.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Car-Service.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EEFB4382D836E8A00B590E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -57,6 +61,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8EB4EEF12D8B568A005DCCE5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8EEFB49E2D876C3F00B590E9 /* CarsDetailView.swift */,
+				8EB4EEF32D8B5726005DCCE5 /* CarInfoView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		8EB4EEF22D8B569A005DCCE5 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				8EBC0C5F2D88B6DF003243F2 /* ImgCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		8EEFB3E02D836C5800B590E9 = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +152,7 @@
 				8EEFB4552D837B7700B590E9 /* UIImageView+Ext.swift */,
 				8EEFB4572D837BAC00B590E9 /* UITextField+Ext.swift */,
 				8EEFB4992D876AE700B590E9 /* UIViewController+Ext.swift */,
+				8EB4EEF52D8B6400005DCCE5 /* UIStackView+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -138,9 +160,9 @@
 		8EEFB49D2D876BFD00B590E9 /* CarsDetailController */ = {
 			isa = PBXGroup;
 			children = (
+				8EB4EEF22D8B569A005DCCE5 /* Cells */,
+				8EB4EEF12D8B568A005DCCE5 /* Views */,
 				8EEFB49B2D876BEF00B590E9 /* CarsDetailController.swift */,
-				8EEFB49E2D876C3F00B590E9 /* CarsDetailView.swift */,
-				8EBC0C5F2D88B6DF003243F2 /* ImgCell.swift */,
 			);
 			path = CarsDetailController;
 			sourceTree = "<group>";
@@ -224,10 +246,12 @@
 				8EEFB49A2D876AE700B590E9 /* UIViewController+Ext.swift in Sources */,
 				8EEFB44E2D83772600B590E9 /* MainTabBarController.swift in Sources */,
 				8EBC0C602D88B6DF003243F2 /* ImgCell.swift in Sources */,
+				8EB4EEF42D8B5726005DCCE5 /* CarInfoView.swift in Sources */,
 				8EEFB49F2D876C3F00B590E9 /* CarsDetailView.swift in Sources */,
 				8EEFB4562D837B7700B590E9 /* UIImageView+Ext.swift in Sources */,
 				8EEFB44B2D83733200B590E9 /* Cars.swift in Sources */,
 				8EEFB4422D836E8A00B590E9 /* CarsCatalogController.swift in Sources */,
+				8EB4EEF62D8B6400005DCCE5 /* UIStackView+Ext.swift in Sources */,
 				8EEFB4512D8379D900B590E9 /* CarCell.swift in Sources */,
 				8EEFB49C2D876BEF00B590E9 /* CarsDetailController.swift in Sources */,
 				8EEFB4532D837AD000B590E9 /* UILabel+Ext.swift in Sources */,

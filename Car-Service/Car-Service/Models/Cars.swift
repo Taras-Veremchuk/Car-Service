@@ -38,15 +38,15 @@ struct Cars: Identifiable {
         let mockData: [Cars] = [
             .init(
                 title: "Opel Astra 2G", year: 2004,
-                images: ["opel", "mustang", "volvo"], seats: 4, transmission: .automatic, fuelType: .diesel, buying: 2020, numVIN: "WTO89944374874", carRegNumber: "St30444"),
+                images: ["opel", "volvo"], seats: 4, transmission: .automatic, fuelType: .diesel, buying: 2020, numVIN: "WTO89944374874", carRegNumber: "ST30444"),
             .init(
                 title: "BMW Series 3", year: 2021,
-                images: ["bmw"], seats: 4, transmission: .automatic, fuelType: .diesel, buying: 2020, numVIN: "WTO89944374874", carRegNumber: "St30444"),
+                images: ["bmw"], seats: 4, transmission: .automatic, fuelType: .diesel, buying: 2020, numVIN: "WTO89944374874", carRegNumber: "SO30444"),
             .init(
-                title: "Mustang", year: 2000, images: ["mustang"], seats: 4, transmission: .automatic, fuelType: .diesel, buying: 2020, numVIN: "WTO89944374874", carRegNumber: "St30444"),
+                title: "Mustang", year: 2000, images: ["mustang"], seats: 4, transmission: .automatic, fuelType: .diesel, buying: 2020, numVIN: "WTO89944374874", carRegNumber: "ST30444"),
             .init(
                 title: "Volvo", year: 2024,
-                images: ["volvo"], seats: 4, transmission: .automatic, fuelType: .diesel, buying: 2020, numVIN: "WTO89944374874", carRegNumber: "St30444")
+                images: ["volvo"], seats: 4, transmission: .automatic, fuelType: .diesel, buying: 2020, numVIN: "WTO89944374874", carRegNumber: "SY30444")
         ]
         return mockData
     }
