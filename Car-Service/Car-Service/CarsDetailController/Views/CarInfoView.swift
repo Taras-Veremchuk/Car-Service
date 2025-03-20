@@ -44,7 +44,7 @@ final class CarInfoView: UIView {
     init(infoType: CarInfoCategory) {
         self.infoType = infoType
         super.init(frame: .zero)
-        setupView()
+        setViews()
         setConstraints()
     }
     
@@ -60,7 +60,7 @@ final class CarInfoView: UIView {
         //        }
     }
     
-    private func setupView() {
+    private func setViews() {
         titleLabel.textAlignment = .center
         typeOfInfoLabel.textAlignment = .center
         iconImage.tintColor = .black

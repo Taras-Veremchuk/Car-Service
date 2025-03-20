@@ -8,18 +8,19 @@
 import UIKit
 
 final class CarsDetailView: UIView {
-    
-    private let titleLabel = UILabel(title: "Car", textColor: .black, fontSize: 28, isBold: true)
+    private let seatsView = CarInfoView(infoType: .seats)
     private let fuelTypeView = CarInfoView(infoType: .fuelType)
     private let transmissionView = CarInfoView(infoType: .transmission)
-    private let seatsView = CarInfoView(infoType: .seats)
-    var stack = UIStackView()
+    private let infoView = CarDataView(infoType: .information)
+    private let servicingView = CarDataView(infoType: .servicing)
+    private let lineView = SplitLineView()
+    private let secondLineView = SplitLineView()
+    private let thirdLineView = SplitLineView()
+    
+    private let titleLabel = UILabel(title: "Car", textColor: .black, fontSize: 28, isBold: true)
     private let elementOfStackSize: CGFloat = 100
-    //    private let buyingLabel = UILabel(title: "2020", textColor: .black, fontSize: 18, isBold: true)
-    //    private let numVINLabel = UILabel(title: "WOLO089088787979", textColor: .black, fontSize: 18, isBold: true)
     private let regNumLabel = UILabel(title: "ST40493", textColor: .black, fontSize: 20, isBold: true)
     private var imageCollection = [UIImageView]()
-    var pageControl = UIPageControl()
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -32,6 +33,8 @@ final class CarsDetailView: UIView {
         collectionView.register(ImgCell.self, forCellWithReuseIdentifier: ImgCell.reusedID)
         return collectionView
     }()
+    var pageControl = UIPageControl()
+    var stack = UIStackView()
     
     
     init() {
@@ -59,10 +62,8 @@ final class CarsDetailView: UIView {
         seatsView.setupTitle("\(car.seats) Seats")
         transmissionView.setupTitle("\(car.transmission.rawValue)")
         fuelTypeView.setupTitle("\(car.fuelType.rawValue)")
-        
-        
-        //        buyingLabel.text = "\(car.buying)"
-        //        numVINLabel.text = "\(car.numVIN)"
+        infoView.setupView(car: car)
+        servicingView.setupView(car: car)
         regNumLabel.text = car.carRegNumber
         regNumLabel.widthAnchor.constraint(
             equalToConstant: widthOfLabel(car.carRegNumber)
@@ -114,8 +115,6 @@ final class CarsDetailView: UIView {
             pageControl.heightAnchor.constraint(equalToConstant: 15)
         ])
         
-        //        buyingLabel
-        //        numVINLabel
         addSubview(regNumLabel)
         regNumLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -141,7 +140,6 @@ final class CarsDetailView: UIView {
             stack.leftAnchor.constraint(equalTo: leftAnchor, constant: 20),
             stack.rightAnchor.constraint(equalTo: rightAnchor, constant: -20)
         ])
-        
         NSLayoutConstraint.activate([
             fuelTypeView.widthAnchor.constraint(equalToConstant: elementOfStackSize),
             fuelTypeView.heightAnchor.constraint(equalToConstant: elementOfStackSize),
@@ -150,6 +148,44 @@ final class CarsDetailView: UIView {
             seatsView.widthAnchor.constraint(equalToConstant: elementOfStackSize),
             seatsView.heightAnchor.constraint(equalToConstant: elementOfStackSize)
         ])
+        
+        addSubview(lineView)
+        NSLayoutConstraint.activate([
+            lineView.topAnchor.constraint(equalTo: stack.bottomAnchor, constant: 8),
+            lineView.leftAnchor.constraint(equalTo: leftAnchor, constant: 20),
+            lineView.rightAnchor.constraint(equalTo: rightAnchor, constant: -20)
+        ])
+        
+        addSubview(infoView)
+        infoView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            infoView.topAnchor.constraint(equalTo: lineView.bottomAnchor),
+            infoView.leftAnchor.constraint(equalTo: leftAnchor, constant: 20),
+            infoView.rightAnchor.constraint(equalTo: rightAnchor, constant: -20)
+        ])
+        
+        addSubview(secondLineView)
+        NSLayoutConstraint.activate([
+            secondLineView.topAnchor.constraint(equalTo: infoView.bottomAnchor),
+            secondLineView.leftAnchor.constraint(equalTo: leftAnchor, constant: 20),
+            secondLineView.rightAnchor.constraint(equalTo: rightAnchor, constant: -20)
+        ])
+        
+        addSubview(servicingView)
+        servicingView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            servicingView.topAnchor.constraint(equalTo: secondLineView.bottomAnchor),
+            servicingView.leftAnchor.constraint(equalTo: leftAnchor, constant: 20),
+            servicingView.rightAnchor.constraint(equalTo: rightAnchor, constant: -20)
+        ])
+        
+        addSubview(thirdLineView)
+        NSLayoutConstraint.activate([
+            thirdLineView.topAnchor.constraint(equalTo: servicingView.bottomAnchor),
+            thirdLineView.leftAnchor.constraint(equalTo: leftAnchor, constant: 20),
+            thirdLineView.rightAnchor.constraint(equalTo: rightAnchor, constant: -20)
+        ])
+     
     }
 
     
