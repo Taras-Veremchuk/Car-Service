@@ -78,7 +78,7 @@ final class CarDataView: UIView {
         ])
         
         let titleStack = UIStackView(views: [firstTitleLabel, secondTitleLabel], axis: .horizontal, aligment: .center)
-        titleStack.distribution = .equalCentering
+//        titleStack.distribution = .equalCentering
         addSubview(titleStack)
         titleStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -88,7 +88,7 @@ final class CarDataView: UIView {
         ])
         
         let infoStack = UIStackView(views: [firstInfoLabel, secondInfoLabel], axis: .horizontal, aligment: .center)
-        infoStack.distribution = .equalCentering
+//        infoStack.distribution = .equalCentering
         addSubview(infoStack)
         infoStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

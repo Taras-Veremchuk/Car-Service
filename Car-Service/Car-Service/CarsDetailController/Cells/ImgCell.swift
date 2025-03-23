@@ -10,7 +10,6 @@ import UIKit
 class ImgCell: UICollectionViewCell {
     static let reusedID = "ImgCell"
     private let carImageView = UIImageView(customImage: UIImage(named: "volvo"), contentMode: .scaleAspectFill)
-    private let carRegNumberLabel = UILabel(title: "", fontSize: 24, isBold: true)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -18,8 +17,7 @@ class ImgCell: UICollectionViewCell {
         setConstraints()
     }
     
-    func setupCell(img: String, regNumber: String, imgCount: Int) {
-        carRegNumberLabel.text = regNumber
+    func setupCell(img: String, imgCount: Int) {
         carImageView.image = UIImage(named: img)
         }
     

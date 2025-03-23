@@ -13,12 +13,11 @@ extension UILabel {
         lines: Int = 0, isBold: Bool = false
     ) {
         self.init()
-        let dynamicFontSize = UIScreen.main.bounds.height * (fontSize / 852)
-        self.text = title
+        let coeff: CGFloat = UIScreen.main.bounds.height / 874.0
+        let dynamicFontSize: CGFloat = coeff * fontSize
+        text = title
         self.textColor = textColor
-        self.font =
-            isBold
-            ? .boldSystemFont(ofSize: dynamicFontSize) : .systemFont(ofSize: dynamicFontSize)
-        self.numberOfLines = lines
+        font = isBold ? .boldSystemFont(ofSize: dynamicFontSize) : .systemFont(ofSize: dynamicFontSize)
+        numberOfLines = lines
     }
 }

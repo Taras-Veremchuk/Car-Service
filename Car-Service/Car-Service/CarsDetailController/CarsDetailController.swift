@@ -8,7 +8,8 @@
 import UIKit
 
 final class CarsDetailController: UIViewController {
-    let mainView = CarsDetailView()
+    private let mainView = CarsDetailView()
+    
     var car = Cars(title: "", year: 0, images: [".opel"], seats: 4,
                    transmission: .automatic,
                    fuelType: .diesel,
@@ -17,11 +18,11 @@ final class CarsDetailController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpViews()
+        setupViews()
         setupDelegates()
     }
     
-    private func setUpViews() {
+    private func setupViews() {
         view.addSubview(mainView)
         mainView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -54,7 +55,7 @@ extension CarsDetailController: UICollectionViewDataSource, UICollectionViewDele
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImgCell.reusedID, for: indexPath) as? ImgCell else {
             return UICollectionViewCell()
         }
-        cell.setupCell(img: currentImg, regNumber: car.carRegNumber, imgCount: car.images.count)
+        cell.setupCell(img: currentImg, imgCount: car.images.count)
         
         return cell
     }

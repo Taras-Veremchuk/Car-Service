@@ -8,6 +8,8 @@
 import UIKit
 
 final class CarsDetailView: UIView {
+    private let scrollView = UIScrollView()
+    private let containerView = UIView()
     private let seatsView = CarInfoView(infoType: .seats)
     private let fuelTypeView = CarInfoView(infoType: .fuelType)
     private let transmissionView = CarInfoView(infoType: .transmission)
@@ -16,7 +18,6 @@ final class CarsDetailView: UIView {
     private let lineView = SplitLineView()
     private let secondLineView = SplitLineView()
     private let thirdLineView = SplitLineView()
-    
     private let titleLabel = UILabel(title: "Car", textColor: .black, fontSize: 28, isBold: true)
     private let elementOfStackSize: CGFloat = 100
     private let regNumLabel = UILabel(title: "ST40493", textColor: .black, fontSize: 20, isBold: true)
@@ -29,6 +30,7 @@ final class CarsDetailView: UIView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
+//        collectionView.alwaysBounceHorizontal = true
         collectionView.isPagingEnabled = true
         collectionView.register(ImgCell.self, forCellWithReuseIdentifier: ImgCell.reusedID)
         return collectionView
@@ -41,9 +43,12 @@ final class CarsDetailView: UIView {
         super.init(frame: .zero)
         backgroundColor = .white
         setViews()
-        setupCollectionView()
         setConstraints()
         setupPageControl()
+        
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.alwaysBounceVertical = true
     }
     
     private func setupPageControl() {
@@ -65,23 +70,11 @@ final class CarsDetailView: UIView {
         infoView.setupView(car: car)
         servicingView.setupView(car: car)
         regNumLabel.text = car.carRegNumber
+        //TO DELETE
         regNumLabel.widthAnchor.constraint(
             equalToConstant: widthOfLabel(car.carRegNumber)
         ).isActive = true
     }
-    
-    private func setupCollectionView() {
-        addSubview(collectionView)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            collectionView.leftAnchor.constraint(equalTo: leftAnchor),
-            collectionView.rightAnchor.constraint(equalTo: rightAnchor),
-            collectionView.heightAnchor.constraint(equalToConstant: 300)
-        ])
-    }
-    
     
     private func setViews() {
         backgroundColor = .white
@@ -106,16 +99,47 @@ final class CarsDetailView: UIView {
     }
     
     private func setConstraints() {
-        addSubview(pageControl)
+        scrollView.backgroundColor = .red
+        addSubview(scrollView)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+        
+        
+        scrollView.addSubview(containerView)
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            containerView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            containerView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            containerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+        ])
+        containerView.backgroundColor = .green
+        
+        containerView.addSubview(collectionView)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            collectionView.heightAnchor.constraint(equalToConstant: 300)
+        ])
+        
+        containerView.addSubview(pageControl)
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             pageControl.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: -20),
-            pageControl.centerXAnchor.constraint(equalTo: centerXAnchor),
+            pageControl.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             pageControl.widthAnchor.constraint(equalToConstant: 80),
             pageControl.heightAnchor.constraint(equalToConstant: 15)
         ])
         
-        addSubview(regNumLabel)
+        containerView.addSubview(regNumLabel)
         regNumLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             regNumLabel.topAnchor.constraint(equalTo: collectionView.topAnchor, constant: 20),
@@ -123,7 +147,7 @@ final class CarsDetailView: UIView {
             regNumLabel.heightAnchor.constraint(equalToConstant: 30)
         ])
         
-        addSubview(titleLabel)
+        containerView.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 16),
@@ -133,13 +157,14 @@ final class CarsDetailView: UIView {
         
         stack = UIStackView(views: [fuelTypeView, transmissionView, seatsView], axis: .horizontal, aligment: .center)
         stack.distribution = .equalCentering
-        addSubview(stack)
+        containerView.addSubview(stack)
         stack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             stack.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
-            stack.leftAnchor.constraint(equalTo: leftAnchor, constant: 20),
-            stack.rightAnchor.constraint(equalTo: rightAnchor, constant: -20)
+            stack.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 20),
+            stack.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -20)
         ])
+        
         NSLayoutConstraint.activate([
             fuelTypeView.widthAnchor.constraint(equalToConstant: elementOfStackSize),
             fuelTypeView.heightAnchor.constraint(equalToConstant: elementOfStackSize),
@@ -149,45 +174,44 @@ final class CarsDetailView: UIView {
             seatsView.heightAnchor.constraint(equalToConstant: elementOfStackSize)
         ])
         
-        addSubview(lineView)
+        containerView.addSubview(lineView)
         NSLayoutConstraint.activate([
             lineView.topAnchor.constraint(equalTo: stack.bottomAnchor, constant: 8),
-            lineView.leftAnchor.constraint(equalTo: leftAnchor, constant: 20),
-            lineView.rightAnchor.constraint(equalTo: rightAnchor, constant: -20)
+            lineView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 20),
+            lineView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -20)
         ])
         
-        addSubview(infoView)
+        containerView.addSubview(infoView)
         infoView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             infoView.topAnchor.constraint(equalTo: lineView.bottomAnchor),
-            infoView.leftAnchor.constraint(equalTo: leftAnchor, constant: 20),
-            infoView.rightAnchor.constraint(equalTo: rightAnchor, constant: -20)
+            infoView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 20),
+            infoView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -20)
         ])
         
-        addSubview(secondLineView)
+        containerView.addSubview(secondLineView)
         NSLayoutConstraint.activate([
             secondLineView.topAnchor.constraint(equalTo: infoView.bottomAnchor),
-            secondLineView.leftAnchor.constraint(equalTo: leftAnchor, constant: 20),
-            secondLineView.rightAnchor.constraint(equalTo: rightAnchor, constant: -20)
+            secondLineView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 20),
+            secondLineView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -20)
         ])
         
-        addSubview(servicingView)
+        containerView.addSubview(servicingView)
         servicingView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             servicingView.topAnchor.constraint(equalTo: secondLineView.bottomAnchor),
-            servicingView.leftAnchor.constraint(equalTo: leftAnchor, constant: 20),
-            servicingView.rightAnchor.constraint(equalTo: rightAnchor, constant: -20)
+            servicingView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 20),
+            servicingView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -20)
         ])
         
-        addSubview(thirdLineView)
+        containerView.addSubview(thirdLineView)
         NSLayoutConstraint.activate([
             thirdLineView.topAnchor.constraint(equalTo: servicingView.bottomAnchor),
-            thirdLineView.leftAnchor.constraint(equalTo: leftAnchor, constant: 20),
-            thirdLineView.rightAnchor.constraint(equalTo: rightAnchor, constant: -20)
+            thirdLineView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 20),
+            thirdLineView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -20),
+            thirdLineView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
-     
     }
-
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
