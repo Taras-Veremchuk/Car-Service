@@ -15,11 +15,22 @@ final class CarsDetailController: UIViewController {
                    fuelType: .diesel,
                    buying: 2020,
                    numVIN: "WOLO9849384983", carRegNumber: "ST43093")
+    var reminders = Reminders.getMockData() {
+        didSet {
+            mainView.tableView.reloadData()
+            mainView.updateTableViewHeight()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         setupDelegates()
+        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+//            self.mainView.tableView.reloadData()
+//            self.mainView.updateTableViewHeight()
+//        }
     }
     
     private func setupViews() {
@@ -38,6 +49,8 @@ final class CarsDetailController: UIViewController {
     private func setupDelegates() {
         mainView.collectionView.dataSource = self
         mainView.collectionView.delegate = self
+        mainView.tableView.dataSource = self
+        mainView.tableView.delegate = self
     }
 }
 
@@ -56,7 +69,7 @@ extension CarsDetailController: UICollectionViewDataSource, UICollectionViewDele
             return UICollectionViewCell()
         }
         cell.setupCell(img: currentImg, imgCount: car.images.count)
-        
+        mainView.updateTableViewHeight()
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -66,4 +79,26 @@ extension CarsDetailController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         mainView.pageControl.currentPage = indexPath.row
     }
+}
+
+extension CarsDetailController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        reminders.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ReminderCell.reuseID) as? ReminderCell else {
+            return UITableViewCell()
+        }
+        cell.selectionStyle = .none
+        if !reminders.isEmpty {
+            cell.setupCell(reminder: reminders[indexPath.row])
+        }
+        return cell
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        80
+    }
+    
+    
 }

@@ -21,7 +21,9 @@ final class CarsDetailView: UIView {
     private let titleLabel = UILabel(title: "Car", textColor: .black, fontSize: 28, isBold: true)
     private let elementOfStackSize: CGFloat = 100
     private let regNumLabel = UILabel(title: "ST40493", textColor: .black, fontSize: 20, isBold: true)
+    private let headingLabel = UILabel(title: "Reminders", textColor: .black, fontSize: 22, lines: 1, isBold: true)
     private var imageCollection = [UIImageView]()
+    private var tableViewHeightConstraint: NSLayoutConstraint?
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -30,13 +32,13 @@ final class CarsDetailView: UIView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
-//        collectionView.alwaysBounceHorizontal = true
+//      collectionView.alwaysBounceHorizontal = true
         collectionView.isPagingEnabled = true
         collectionView.register(ImgCell.self, forCellWithReuseIdentifier: ImgCell.reusedID)
-        return collectionView
-    }()
+        return collectionView }()
     var pageControl = UIPageControl()
-    var stack = UIStackView()
+    let tableView = UITableView()
+//    var stack = UIStackView()
     
     
     init() {
@@ -49,8 +51,18 @@ final class CarsDetailView: UIView {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.alwaysBounceVertical = true
+        setupTableView()
     }
     
+    private func setupTableView() {
+        tableView.register(ReminderCell.self, forCellReuseIdentifier: ReminderCell.reuseID)
+        tableView.backgroundColor = .yellow
+        tableView.separatorStyle = .none
+        tableView.showsHorizontalScrollIndicator = false
+        tableView.showsVerticalScrollIndicator = false
+        tableView.isScrollEnabled = false
+        
+    }
     private func setupPageControl() {
         pageControl.addTarget(self, action: #selector(pageControlTapped(_:)), for: .valueChanged)
     }
@@ -72,8 +84,7 @@ final class CarsDetailView: UIView {
         regNumLabel.text = car.carRegNumber
         //TO DELETE
         regNumLabel.widthAnchor.constraint(
-            equalToConstant: widthOfLabel(car.carRegNumber)
-        ).isActive = true
+            equalToConstant: widthOfLabel(car.carRegNumber)).isActive = true
     }
     
     private func setViews() {
@@ -155,7 +166,7 @@ final class CarsDetailView: UIView {
             titleLabel.heightAnchor.constraint(equalToConstant: 30)
         ])
         
-        stack = UIStackView(views: [fuelTypeView, transmissionView, seatsView], axis: .horizontal, aligment: .center)
+        let stack = UIStackView(views: [fuelTypeView, transmissionView, seatsView], axis: .horizontal, aligment: .center)
         stack.distribution = .equalCentering
         containerView.addSubview(stack)
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -208,9 +219,34 @@ final class CarsDetailView: UIView {
         NSLayoutConstraint.activate([
             thirdLineView.topAnchor.constraint(equalTo: servicingView.bottomAnchor),
             thirdLineView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 20),
-            thirdLineView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -20),
-            thirdLineView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+            thirdLineView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -20)
         ])
+        
+        containerView.addSubview(headingLabel)
+        headingLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            headingLabel.topAnchor.constraint(equalTo: thirdLineView.bottomAnchor, constant: 8),
+            headingLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20)
+        ])
+        
+        containerView.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: 0)
+        tableViewHeightConstraint?.isActive = true
+        
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: headingLabel.bottomAnchor, constant: 8),
+            tableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            tableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
+            tableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+        ])
+    }
+    
+    func updateTableViewHeight() {
+        tableView.layoutIfNeeded()
+        let height = tableView.contentSize.height
+        tableViewHeightConstraint?.constant = height + 50
+        scrollView.layoutIfNeeded()
     }
     
     required init?(coder: NSCoder) {

@@ -11,6 +11,8 @@
 		8EAFF59A2D8CC88D0006A278 /* SplitLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAFF5992D8CC88D0006A278 /* SplitLineView.swift */; };
 		8EB4EEF42D8B5726005DCCE5 /* CarInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB4EEF32D8B5726005DCCE5 /* CarInfoView.swift */; };
 		8EB4EEF62D8B6400005DCCE5 /* UIStackView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB4EEF52D8B6400005DCCE5 /* UIStackView+Ext.swift */; };
+		8EB8484A2D933EEA004C0020 /* Reminders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB848492D933EEA004C0020 /* Reminders.swift */; };
+		8EB8484C2D9342B3004C0020 /* ReminderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB8484B2D9342B3004C0020 /* ReminderCell.swift */; };
 		8EBC0C602D88B6DF003243F2 /* ImgCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBC0C5F2D88B6DF003243F2 /* ImgCell.swift */; };
 		8EEFB4402D836E8A00B590E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEFB4382D836E8A00B590E9 /* AppDelegate.swift */; };
 		8EEFB4412D836E8A00B590E9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEFB43D2D836E8A00B590E9 /* SceneDelegate.swift */; };
@@ -34,6 +36,8 @@
 		8EAFF5992D8CC88D0006A278 /* SplitLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitLineView.swift; sourceTree = "<group>"; };
 		8EB4EEF32D8B5726005DCCE5 /* CarInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarInfoView.swift; sourceTree = "<group>"; };
 		8EB4EEF52D8B6400005DCCE5 /* UIStackView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Ext.swift"; sourceTree = "<group>"; };
+		8EB848492D933EEA004C0020 /* Reminders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminders.swift; sourceTree = "<group>"; };
+		8EB8484B2D9342B3004C0020 /* ReminderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCell.swift; sourceTree = "<group>"; };
 		8EBC0C5F2D88B6DF003243F2 /* ImgCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgCell.swift; sourceTree = "<group>"; };
 		8EEFB3E92D836C5800B590E9 /* Car-Service.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Car-Service.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EEFB4382D836E8A00B590E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -80,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				8EBC0C5F2D88B6DF003243F2 /* ImgCell.swift */,
+				8EB8484B2D9342B3004C0020 /* ReminderCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -139,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				8EEFB44A2D83733200B590E9 /* Cars.swift */,
+				8EB848492D933EEA004C0020 /* Reminders.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -246,6 +252,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EB8484A2D933EEA004C0020 /* Reminders.swift in Sources */,
 				8EEFB4402D836E8A00B590E9 /* AppDelegate.swift in Sources */,
 				8EEFB4582D837BAC00B590E9 /* UITextField+Ext.swift in Sources */,
 				8EEFB4412D836E8A00B590E9 /* SceneDelegate.swift in Sources */,
@@ -260,6 +267,7 @@
 				8EEFB44B2D83733200B590E9 /* Cars.swift in Sources */,
 				8EEFB4422D836E8A00B590E9 /* CarsCatalogController.swift in Sources */,
 				8EB4EEF62D8B6400005DCCE5 /* UIStackView+Ext.swift in Sources */,
+				8EB8484C2D9342B3004C0020 /* ReminderCell.swift in Sources */,
 				8EEFB4512D8379D900B590E9 /* CarCell.swift in Sources */,
 				8EEFB49C2D876BEF00B590E9 /* CarsDetailController.swift in Sources */,
 				8EEFB4532D837AD000B590E9 /* UILabel+Ext.swift in Sources */,
