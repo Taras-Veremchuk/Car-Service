@@ -55,7 +55,6 @@ extension CarsCatalogController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = CarsDetailController()
         vc.car = cars[indexPath.item]
-//        vc.mainView.delegate = self
         vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
     }

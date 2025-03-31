@@ -18,7 +18,7 @@ final class CarsDetailController: UIViewController {
     var reminders = Reminders.getMockData() {
         didSet {
             mainView.tableView.reloadData()
-            mainView.updateTableViewHeight()
+            mainView.updateTableViewHeight(reminders.count)
         }
     }
     
@@ -26,11 +26,11 @@ final class CarsDetailController: UIViewController {
         super.viewDidLoad()
         setupViews()
         setupDelegates()
+    }
         
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//            self.mainView.tableView.reloadData()
-//            self.mainView.updateTableViewHeight()
-//        }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        mainView.updateTableViewHeight(reminders.count)
     }
     
     private func setupViews() {
@@ -69,7 +69,6 @@ extension CarsDetailController: UICollectionViewDataSource, UICollectionViewDele
             return UICollectionViewCell()
         }
         cell.setupCell(img: currentImg, imgCount: car.images.count)
-        mainView.updateTableViewHeight()
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -97,8 +96,9 @@ extension CarsDetailController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        80
+        return 70
     }
+    
     
     
 }

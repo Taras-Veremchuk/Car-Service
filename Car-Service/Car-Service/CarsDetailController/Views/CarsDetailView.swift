@@ -22,7 +22,7 @@ final class CarsDetailView: UIView {
     private let elementOfStackSize: CGFloat = 100
     private let regNumLabel = UILabel(title: "ST40493", textColor: .black, fontSize: 20, isBold: true)
     private let headingLabel = UILabel(title: "Reminders", textColor: .black, fontSize: 22, lines: 1, isBold: true)
-    private var imageCollection = [UIImageView]()
+    private var iconPlusView = UIImageView(customImage: UIImage(systemName: "plus.circle.fill"), contentMode: .scaleAspectFit)
     private var tableViewHeightConstraint: NSLayoutConstraint?
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -32,14 +32,11 @@ final class CarsDetailView: UIView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
-//      collectionView.alwaysBounceHorizontal = true
         collectionView.isPagingEnabled = true
         collectionView.register(ImgCell.self, forCellWithReuseIdentifier: ImgCell.reusedID)
         return collectionView }()
     var pageControl = UIPageControl()
     let tableView = UITableView()
-//    var stack = UIStackView()
-    
     
     init() {
         super.init(frame: .zero)
@@ -97,6 +94,7 @@ final class CarsDetailView: UIView {
         transmissionView.layer.cornerRadius = 16
         fuelTypeView.layer.cornerRadius = 16
         transmissionView.clipsToBounds = true
+        iconPlusView.tintColor = .gray
         
         regNumLabel.backgroundColor = UIColor(named: "appBgColor")
         regNumLabel.textAlignment = .center
@@ -229,26 +227,36 @@ final class CarsDetailView: UIView {
             headingLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20)
         ])
         
+        containerView.addSubview(iconPlusView)
+        iconPlusView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            iconPlusView.topAnchor.constraint(equalTo: thirdLineView.bottomAnchor, constant: 8),
+            iconPlusView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -20),
+            iconPlusView.centerXAnchor.constraint(equalTo: headingLabel.centerXAnchor),
+            iconPlusView.widthAnchor.constraint(equalToConstant: 32),
+            iconPlusView.heightAnchor.constraint(equalToConstant: 32),
+        ])
+        
         containerView.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: 0)
         tableViewHeightConstraint?.isActive = true
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: headingLabel.bottomAnchor, constant: 8),
+            tableView.topAnchor.constraint(equalTo: headingLabel.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             tableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
-            tableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
         ])
     }
     
-    func updateTableViewHeight() {
+    func updateTableViewHeight(_ amountOfCells: Int) {
         tableView.layoutIfNeeded()
-        let height = tableView.contentSize.height
-        tableViewHeightConstraint?.constant = height + 50
+        let height = amountOfCells * 70
+        tableViewHeightConstraint?.constant = CGFloat(height)
         scrollView.layoutIfNeeded()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
