@@ -7,7 +7,12 @@
 
 import UIKit
 
+protocol CarsDetailViewDelegate: AnyObject {
+    func didTapPlusButton()
+}
+
 final class CarsDetailView: UIView {
+    weak var delegate: CarsDetailViewDelegate?
     private let scrollView = UIScrollView()
     private let containerView = UIView()
     private let seatsView = CarInfoView(infoType: .seats)
@@ -20,9 +25,18 @@ final class CarsDetailView: UIView {
     private let thirdLineView = SplitLineView()
     private let titleLabel = UILabel(title: "Car", textColor: .black, fontSize: 28, isBold: true)
     private let elementOfStackSize: CGFloat = 100
+    private let backView = UIView()
     private let regNumLabel = UILabel(title: "ST40493", textColor: .black, fontSize: 20, isBold: true)
     private let headingLabel = UILabel(title: "Reminders", textColor: .black, fontSize: 22, lines: 1, isBold: true)
-    private var iconPlusView = UIImageView(customImage: UIImage(systemName: "plus.circle.fill"), contentMode: .scaleAspectFit)
+    private let plusReminderBtn: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
+        button.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 42), forImageIn: .normal)
+        button.tintColor = .gray
+        button.backgroundColor = .clear
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     private var tableViewHeightConstraint: NSLayoutConstraint?
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -49,8 +63,17 @@ final class CarsDetailView: UIView {
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.alwaysBounceVertical = true
         setupTableView()
+        configurePlusBtn()
     }
     
+    private func configurePlusBtn() {
+        plusReminderBtn.addTarget(
+            self, action: #selector(onPlus), for: .touchUpInside)
+    }
+    @objc private func onPlus() {
+        delegate?.didTapPlusButton()
+    }
+
     private func setupTableView() {
         tableView.register(ReminderCell.self, forCellReuseIdentifier: ReminderCell.reuseID)
         tableView.backgroundColor = .yellow
@@ -79,32 +102,21 @@ final class CarsDetailView: UIView {
         infoView.setupView(car: car)
         servicingView.setupView(car: car)
         regNumLabel.text = car.carRegNumber
-        //TO DELETE
-        regNumLabel.widthAnchor.constraint(
-            equalToConstant: widthOfLabel(car.carRegNumber)).isActive = true
     }
     
     private func setViews() {
         backgroundColor = .white
         pageControl.backgroundStyle = .minimal
         seatsView.backgroundColor = .bgCell
-        transmissionView.backgroundColor = .bgCell
-        fuelTypeView.backgroundColor = .bgCell
         seatsView.layer.cornerRadius = 16
-        transmissionView.layer.cornerRadius = 16
+        fuelTypeView.backgroundColor = .bgCell
         fuelTypeView.layer.cornerRadius = 16
-        transmissionView.clipsToBounds = true
-        iconPlusView.tintColor = .gray
+        transmissionView.backgroundColor = .bgCell
+        transmissionView.layer.cornerRadius = 16
         
-        regNumLabel.backgroundColor = UIColor(named: "appBgColor")
-        regNumLabel.textAlignment = .center
-        regNumLabel.layer.cornerRadius = 16
-        regNumLabel.clipsToBounds = true
-        regNumLabel.layer.cornerRadius = 8
-    }
-    
-    private func widthOfLabel(_ labelText: String) -> CGFloat {
-        return CGFloat(16 + labelText.count * 12)
+        backView.backgroundColor = UIColor(named: "appBgColor")
+        backView.clipsToBounds = true
+        backView.layer.cornerRadius = 8
     }
     
     private func setConstraints() {
@@ -148,12 +160,20 @@ final class CarsDetailView: UIView {
             pageControl.heightAnchor.constraint(equalToConstant: 15)
         ])
         
-        containerView.addSubview(regNumLabel)
+        containerView.addSubview(backView)
+        backView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            backView.topAnchor.constraint(equalTo: collectionView.topAnchor, constant: 20),
+            backView.rightAnchor.constraint(equalTo: collectionView.rightAnchor, constant: -20),
+            backView.heightAnchor.constraint(equalToConstant: 30)
+        ])
+        
+        backView.addSubview(regNumLabel)
         regNumLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            regNumLabel.topAnchor.constraint(equalTo: collectionView.topAnchor, constant: 20),
-            regNumLabel.rightAnchor.constraint(equalTo: collectionView.rightAnchor, constant: -20),
-            regNumLabel.heightAnchor.constraint(equalToConstant: 30)
+            regNumLabel.leftAnchor.constraint(equalTo: backView.leftAnchor, constant: 8),
+            regNumLabel.rightAnchor.constraint(equalTo: backView.rightAnchor, constant: -8),
+            regNumLabel.centerYAnchor.constraint(equalTo: backView.centerYAnchor)
         ])
         
         containerView.addSubview(titleLabel)
@@ -227,16 +247,6 @@ final class CarsDetailView: UIView {
             headingLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20)
         ])
         
-        containerView.addSubview(iconPlusView)
-        iconPlusView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            iconPlusView.topAnchor.constraint(equalTo: thirdLineView.bottomAnchor, constant: 8),
-            iconPlusView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -20),
-            iconPlusView.centerXAnchor.constraint(equalTo: headingLabel.centerXAnchor),
-            iconPlusView.widthAnchor.constraint(equalToConstant: 32),
-            iconPlusView.heightAnchor.constraint(equalToConstant: 32),
-        ])
-        
         containerView.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: 0)
@@ -247,6 +257,15 @@ final class CarsDetailView: UIView {
             tableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             tableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
             tableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+        ])
+        
+        containerView.addSubview(plusReminderBtn)
+ 
+        NSLayoutConstraint.activate([
+            plusReminderBtn.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -20),
+            plusReminderBtn.centerYAnchor.constraint(equalTo: headingLabel.centerYAnchor),
+            plusReminderBtn.widthAnchor.constraint(equalToConstant: 42),
+            plusReminderBtn.heightAnchor.constraint(equalToConstant: 42),
         ])
     }
     

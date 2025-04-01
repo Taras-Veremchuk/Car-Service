@@ -38,10 +38,10 @@ struct Cars: Identifiable {
         let mockData: [Cars] = [
             .init(
                 title: "Opel Astra 2G", year: 2004,
-                images: ["opel", "volvo"], seats: 4, transmission: .automatic, fuelType: .diesel, buying: 2020, numVIN: "WTO89944374874", carRegNumber: "ST30444"),
+                images: ["opel", "volvo"], seats: 4, transmission: .automatic, fuelType: .diesel, buying: 2020, numVIN: "WTO89944374874", carRegNumber: "ST44"),
             .init(
                 title: "BMW Series 3", year: 2021,
-                images: ["bmw"], seats: 4, transmission: .automatic, fuelType: .diesel, buying: 2020, numVIN: "WTO89944374874", carRegNumber: "SO30444"),
+                images: ["bmw"], seats: 4, transmission: .automatic, fuelType: .diesel, buying: 2020, numVIN: "WTO89944374874", carRegNumber: "SO30444559"),
             .init(
                 title: "Mustang", year: 2000, images: ["mustang"], seats: 4, transmission: .automatic, fuelType: .diesel, buying: 2020, numVIN: "WTO89944374874", carRegNumber: "ST30444"),
             .init(

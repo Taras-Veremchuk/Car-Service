@@ -51,6 +51,7 @@ final class CarsDetailController: UIViewController {
         mainView.collectionView.delegate = self
         mainView.tableView.dataSource = self
         mainView.tableView.delegate = self
+        mainView.delegate = self
     }
 }
 
@@ -98,7 +99,12 @@ extension CarsDetailController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
     }
-    
-    
-    
+}
+
+extension CarsDetailController: CarsDetailViewDelegate {
+    func didTapPlusButton() {
+        let vc = AddReminderController()
+        vc.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
