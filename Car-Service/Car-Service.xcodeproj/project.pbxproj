@@ -11,6 +11,8 @@
 		8EAFF59A2D8CC88D0006A278 /* SplitLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAFF5992D8CC88D0006A278 /* SplitLineView.swift */; };
 		8EB4EEF42D8B5726005DCCE5 /* CarInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB4EEF32D8B5726005DCCE5 /* CarInfoView.swift */; };
 		8EB4EEF62D8B6400005DCCE5 /* UIStackView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB4EEF52D8B6400005DCCE5 /* UIStackView+Ext.swift */; };
+		8EB5AC7C2D9F1AA200A317B9 /* ReminderDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB5AC7B2D9F1AA200A317B9 /* ReminderDetailController.swift */; };
+		8EB5AC7F2D9F1AD500A317B9 /* ReminderDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB5AC7E2D9F1AD500A317B9 /* ReminderDetailView.swift */; };
 		8EB8484A2D933EEA004C0020 /* Reminders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB848492D933EEA004C0020 /* Reminders.swift */; };
 		8EB8484C2D9342B3004C0020 /* ReminderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB8484B2D9342B3004C0020 /* ReminderCell.swift */; };
 		8EB985032D9C70E800156CC2 /* AddReminderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB985022D9C70E800156CC2 /* AddReminderController.swift */; };
@@ -38,6 +40,8 @@
 		8EAFF5992D8CC88D0006A278 /* SplitLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitLineView.swift; sourceTree = "<group>"; };
 		8EB4EEF32D8B5726005DCCE5 /* CarInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarInfoView.swift; sourceTree = "<group>"; };
 		8EB4EEF52D8B6400005DCCE5 /* UIStackView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Ext.swift"; sourceTree = "<group>"; };
+		8EB5AC7B2D9F1AA200A317B9 /* ReminderDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderDetailController.swift; sourceTree = "<group>"; };
+		8EB5AC7E2D9F1AD500A317B9 /* ReminderDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderDetailView.swift; sourceTree = "<group>"; };
 		8EB848492D933EEA004C0020 /* Reminders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminders.swift; sourceTree = "<group>"; };
 		8EB8484B2D9342B3004C0020 /* ReminderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCell.swift; sourceTree = "<group>"; };
 		8EB985022D9C70E800156CC2 /* AddReminderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReminderController.swift; sourceTree = "<group>"; };
@@ -93,6 +97,15 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		8EB5AC7D2D9F1AB100A317B9 /* ReminderDetailController */ = {
+			isa = PBXGroup;
+			children = (
+				8EB5AC7B2D9F1AA200A317B9 /* ReminderDetailController.swift */,
+				8EB5AC7E2D9F1AD500A317B9 /* ReminderDetailView.swift */,
+			);
+			path = ReminderDetailController;
+			sourceTree = "<group>";
+		};
 		8EB985042D9C70F100156CC2 /* AddReminderController */ = {
 			isa = PBXGroup;
 			children = (
@@ -128,9 +141,10 @@
 				8EEFB4542D837ADB00B590E9 /* Extensions */,
 				8EEFB49D2D876BFD00B590E9 /* CarsDetailController */,
 				8EB985042D9C70F100156CC2 /* AddReminderController */,
-				8EEFB43A2D836E8A00B590E9 /* Info.plist */,
-				8EEFB4392D836E8A00B590E9 /* Assets.xcassets */,
+				8EB5AC7D2D9F1AB100A317B9 /* ReminderDetailController */,
 				8EEFB43C2D836E8A00B590E9 /* LaunchScreen.storyboard */,
+				8EEFB4392D836E8A00B590E9 /* Assets.xcassets */,
+				8EEFB43A2D836E8A00B590E9 /* Info.plist */,
 			);
 			path = "Car-Service";
 			sourceTree = "<group>";
@@ -278,8 +292,10 @@
 				8EAFF59A2D8CC88D0006A278 /* SplitLineView.swift in Sources */,
 				8EEFB49F2D876C3F00B590E9 /* CarsDetailView.swift in Sources */,
 				8EAFF5982D8CB39E0006A278 /* CarDataView.swift in Sources */,
+				8EB5AC7C2D9F1AA200A317B9 /* ReminderDetailController.swift in Sources */,
 				8EEFB4562D837B7700B590E9 /* UIImageView+Ext.swift in Sources */,
 				8EEFB44B2D83733200B590E9 /* Cars.swift in Sources */,
+				8EB5AC7F2D9F1AD500A317B9 /* ReminderDetailView.swift in Sources */,
 				8EEFB4422D836E8A00B590E9 /* CarsCatalogController.swift in Sources */,
 				8EB4EEF62D8B6400005DCCE5 /* UIStackView+Ext.swift in Sources */,
 				8EB8484C2D9342B3004C0020 /* ReminderCell.swift in Sources */,

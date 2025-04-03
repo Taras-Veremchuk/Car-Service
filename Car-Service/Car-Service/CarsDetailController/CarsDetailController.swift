@@ -27,7 +27,7 @@ final class CarsDetailController: UIViewController {
         setupViews()
         setupDelegates()
     }
-        
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         mainView.updateTableViewHeight(reminders.count)
@@ -98,6 +98,39 @@ extension CarsDetailController: UITableViewDataSource, UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = ReminderDetailController()
+        let currentReminder = reminders[indexPath.item]
+        vc.mainView.setupView(currentReminder)
+        self.present(vc, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, _ in
+            let alert = UIAlertController(title: "Warning",
+                                          message: "Are you sure you want to delete \(self.reminders[indexPath.row].text)",
+                                          preferredStyle: .actionSheet)
+            
+            let yesAction = UIAlertAction(title: "Yes", style: .destructive) { _ in
+                self.reminders.remove(at: indexPath.row)
+            }
+            
+            let noAction = UIAlertAction(title: "No", style: .cancel) { _ in
+                self.mainView.tableView.reloadData()
+            }
+            
+            alert.addAction(yesAction)
+            alert.addAction(noAction)
+            
+            self.present(alert, animated: true)
+        }
+        let editAction = UIContextualAction(style: .normal, title: "Edit") { _, _, _ in
+            print("Edit Reminder")
+        }
+        let config = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
+        return config
     }
 }
 

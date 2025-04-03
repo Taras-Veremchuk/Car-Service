@@ -76,7 +76,6 @@ final class CarsDetailView: UIView {
 
     private func setupTableView() {
         tableView.register(ReminderCell.self, forCellReuseIdentifier: ReminderCell.reuseID)
-        tableView.backgroundColor = .yellow
         tableView.separatorStyle = .none
         tableView.showsHorizontalScrollIndicator = false
         tableView.showsVerticalScrollIndicator = false
@@ -120,7 +119,6 @@ final class CarsDetailView: UIView {
     }
     
     private func setConstraints() {
-        scrollView.backgroundColor = .red
         addSubview(scrollView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -140,7 +138,6 @@ final class CarsDetailView: UIView {
             containerView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             containerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
         ])
-        containerView.backgroundColor = .green
         
         containerView.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false

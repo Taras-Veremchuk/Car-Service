@@ -70,7 +70,9 @@ extension CarsCatalogController: UITableViewDataSource, UITableViewDelegate {
                 self.dismiss(animated: true)
             }
             
-            let noAction = UIAlertAction(title: "No", style: .cancel)
+            let noAction = UIAlertAction(title: "No", style: .cancel) { _ in
+                self.mainView.tableView.reloadData()
+            }
             
             actionSheet.addAction(yesAction)
             actionSheet.addAction(noAction)

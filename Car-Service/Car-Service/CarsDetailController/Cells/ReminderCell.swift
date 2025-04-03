@@ -25,8 +25,6 @@ final class ReminderCell: UITableViewCell {
     
     private func setViews() {
         iconImage.tintColor = .black
-        layer.borderWidth = 2
-        layer.borderColor = UIColor.black.cgColor
     }
     
     private func setConstraints() {
