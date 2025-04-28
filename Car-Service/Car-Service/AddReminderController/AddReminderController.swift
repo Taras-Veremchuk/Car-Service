@@ -6,15 +6,35 @@
 //
 
 import UIKit
+protocol AddReminderViewControllerDelegate: AnyObject {
+    func reminderCreated(_ reminder: Reminders)
+}
 
 class AddReminderController: UIViewController {
     private let mainView = AddReminderView()
+    weak var delegate: AddReminderViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        configureCreateReminderBtn()
         title = "Add Reminder"
     }
+    
+    private func configureCreateReminderBtn() {
+        mainView.createReminderBtn.addTarget(
+            self, action: #selector(createButtonTapped), for: .touchUpInside)
+        }
+        
+@objc func createButtonTapped() {
+    guard !mainView.textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+        showAlert("Text is empty")
+        return
+    }
+    let newReminder = Reminders(date: mainView.datePicker.date, text: mainView.textView.text)
+    delegate?.reminderCreated(newReminder)
+    navigationController?.popViewController(animated: true)
+}
     
     private func setupViews() {
         view.addSubview(mainView)

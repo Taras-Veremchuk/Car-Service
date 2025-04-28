@@ -18,6 +18,7 @@
 		8EB985032D9C70E800156CC2 /* AddReminderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB985022D9C70E800156CC2 /* AddReminderController.swift */; };
 		8EB985062D9C711B00156CC2 /* AddReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB985052D9C711B00156CC2 /* AddReminderView.swift */; };
 		8EBC0C602D88B6DF003243F2 /* ImgCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBC0C5F2D88B6DF003243F2 /* ImgCell.swift */; };
+		8EC367592DBFFE01001AB989 /* UIButton+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC367582DBFFE01001AB989 /* UIButton+Ext.swift */; };
 		8EEFB4402D836E8A00B590E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEFB4382D836E8A00B590E9 /* AppDelegate.swift */; };
 		8EEFB4412D836E8A00B590E9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEFB43D2D836E8A00B590E9 /* SceneDelegate.swift */; };
 		8EEFB4422D836E8A00B590E9 /* CarsCatalogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEFB43E2D836E8A00B590E9 /* CarsCatalogController.swift */; };
@@ -47,6 +48,7 @@
 		8EB985022D9C70E800156CC2 /* AddReminderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReminderController.swift; sourceTree = "<group>"; };
 		8EB985052D9C711B00156CC2 /* AddReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReminderView.swift; sourceTree = "<group>"; };
 		8EBC0C5F2D88B6DF003243F2 /* ImgCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgCell.swift; sourceTree = "<group>"; };
+		8EC367582DBFFE01001AB989 /* UIButton+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Ext.swift"; sourceTree = "<group>"; };
 		8EEFB3E92D836C5800B590E9 /* Car-Service.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Car-Service.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EEFB4382D836E8A00B590E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8EEFB4392D836E8A00B590E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 				8EEFB4572D837BAC00B590E9 /* UITextField+Ext.swift */,
 				8EEFB4992D876AE700B590E9 /* UIViewController+Ext.swift */,
 				8EB4EEF52D8B6400005DCCE5 /* UIStackView+Ext.swift */,
+				8EC367582DBFFE01001AB989 /* UIButton+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				8EEFB4402D836E8A00B590E9 /* AppDelegate.swift in Sources */,
 				8EEFB4582D837BAC00B590E9 /* UITextField+Ext.swift in Sources */,
 				8EEFB4412D836E8A00B590E9 /* SceneDelegate.swift in Sources */,
+				8EC367592DBFFE01001AB989 /* UIButton+Ext.swift in Sources */,
 				8EEFB49A2D876AE700B590E9 /* UIViewController+Ext.swift in Sources */,
 				8EEFB44E2D83772600B590E9 /* MainTabBarController.swift in Sources */,
 				8EBC0C602D88B6DF003243F2 /* ImgCell.swift in Sources */,

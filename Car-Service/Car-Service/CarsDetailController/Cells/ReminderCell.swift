@@ -56,7 +56,7 @@ final class ReminderCell: UITableViewCell {
     
     func setupCell(reminder: Reminders) {
         
-        dataLabel.text = reminder.data
+        dataLabel.text = "\(reminder.date)"
         txtLabel.text = reminder.text
     }
     

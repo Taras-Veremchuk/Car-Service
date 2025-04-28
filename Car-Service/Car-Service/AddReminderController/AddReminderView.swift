@@ -13,7 +13,8 @@ class AddReminderView: UIView, UITextViewDelegate {
     let datePicker = UIDatePicker()
     private var textViewHeightConstraint: NSLayoutConstraint!
     private let notesTitleLabel = UILabel(title: "Notes", textColor: .gray, fontSize: 16)
-    private let textView = UITextView()
+    let textView = UITextView()
+    let createReminderBtn = UIButton(title: "Add Reminder", bgColor: UIColor(named: "btnColor")!)
     
     init() {
         super.init(frame: .zero)
@@ -92,6 +93,14 @@ class AddReminderView: UIView, UITextViewDelegate {
             textView.topAnchor.constraint(equalTo: notesTitleLabel.bottomAnchor, constant: 16),
             textView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             textView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
+        ])
+        
+        addSubview(createReminderBtn)
+        createReminderBtn.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            createReminderBtn.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            createReminderBtn.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40),
+            createReminderBtn.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40)
         ])
     }
     

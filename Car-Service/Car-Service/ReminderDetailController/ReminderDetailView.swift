@@ -25,7 +25,7 @@ final class ReminderDetailView: UIView {
     
     func setupView(_ reminder: Reminders) {
         textLabel.text = reminder.text
-        dataLabel.text = reminder.data
+        dataLabel.text = "\(reminder.date)"
     }
     
     private func setConstraints() {

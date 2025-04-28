@@ -137,7 +137,14 @@ extension CarsDetailController: UITableViewDataSource, UITableViewDelegate {
 extension CarsDetailController: CarsDetailViewDelegate {
     func didTapPlusButton() {
         let vc = AddReminderController()
+        vc.delegate = self
         vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+extension CarsDetailController: AddReminderViewControllerDelegate {
+    func reminderCreated(_ reminder: Reminders) {
+        reminders.insert(reminder, at: 0)
     }
 }
