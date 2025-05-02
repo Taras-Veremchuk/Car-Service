@@ -10,7 +10,7 @@ import UIKit
 final class ReminderCell: UITableViewCell {
     static let reuseID = "ReminderCell"
     private var iconImage = UIImageView(customImage: UIImage(systemName: "lightbulb"), contentMode: .scaleAspectFit)
-    private let dataLabel = UILabel(textColor: .gray, fontSize: 16)
+    private let dateLabel = UILabel(textColor: .gray, fontSize: 16)
     private let txtLabel = UILabel(fontSize: 20, isBold: true)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -37,17 +37,17 @@ final class ReminderCell: UITableViewCell {
             iconImage.heightAnchor.constraint(equalToConstant: 28),
         ])
         
-        addSubview(dataLabel)
-        dataLabel.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(dateLabel)
+        dateLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            dataLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            dataLabel.leadingAnchor.constraint(equalTo: iconImage.trailingAnchor, constant: 8)
+            dateLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            dateLabel.leadingAnchor.constraint(equalTo: iconImage.trailingAnchor, constant: 8)
         ])
         
         addSubview(txtLabel)
         txtLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            txtLabel.topAnchor.constraint(equalTo: dataLabel.bottomAnchor, constant: 8),
+            txtLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 8),
             txtLabel.leftAnchor.constraint(equalTo: iconImage.rightAnchor, constant: 8),
             txtLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -8),
             txtLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
@@ -56,7 +56,7 @@ final class ReminderCell: UITableViewCell {
     
     func setupCell(reminder: Reminders) {
         
-        dataLabel.text = "\(reminder.date)"
+        dateLabel.text = "\(reminder.date)"
         txtLabel.text = reminder.text
     }
     

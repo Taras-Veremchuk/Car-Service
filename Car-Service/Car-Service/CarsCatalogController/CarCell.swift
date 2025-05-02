@@ -25,7 +25,6 @@ final class CarCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     private func setViews() {
         backgroundColor = .clear
         carImageView.clipsToBounds = true
@@ -65,7 +64,5 @@ final class CarCell: UITableViewCell {
         self.id = car.id
         titleLabel.text = "\(car.title), \(car.year)"
         carImageView.image = UIImage(named: car.images[0])
-        
     }
-    
 }

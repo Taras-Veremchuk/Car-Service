@@ -58,7 +58,7 @@ final class CarDataView: UIView {
     func setupView(car: Cars) {
                 switch infoType {
                 case .information:
-                    firstInfoLabel.text = "\(car.buying)" //Треба буде перетворювати data в рядок
+                    firstInfoLabel.text = "\(car.buying)" //Треба буде перетворювати date в рядок
                     secondInfoLabel.text = "\(car.numVIN)"
                 case .servicing:
                     firstInfoLabel.text = "Last service Data"//Створити модель даних під сервіси і перевіряти чи вони є в масиві. Якщо є то брати дату першого сервісу

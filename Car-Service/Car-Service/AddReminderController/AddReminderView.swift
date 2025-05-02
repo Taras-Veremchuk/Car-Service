@@ -19,7 +19,7 @@ class AddReminderView: UIView, UITextViewDelegate {
     init() {
         super.init(frame: .zero)
         setViews()
-        setupTextView()
+        createTextView()
         setConstraints()
         configureDatePicker()
     }
@@ -29,13 +29,7 @@ class AddReminderView: UIView, UITextViewDelegate {
         datePicker.datePickerMode = .dateAndTime
         datePicker.locale = .current
         datePicker.preferredDatePickerStyle = .compact
-        
-        let todayDate = Date()
-        var twoYearTime = TimeInterval()
-        twoYearTime = (365 * 24 * 60 * 60) * 2
-        let twoYearFromDate = todayDate.addingTimeInterval(twoYearTime)
-        datePicker.minimumDate = todayDate
-        datePicker.maximumDate = twoYearFromDate
+        datePicker.minimumDate = Date()
     }
     
     @objc private func dateChanged(object: UIDatePicker) {
@@ -43,7 +37,6 @@ class AddReminderView: UIView, UITextViewDelegate {
             let formatter = DateFormatter()
             formatter.dateStyle = .medium
             formatter.timeStyle = .short
-//            dateTextField.text = formatter.string(from: datePicker.date)
         }
     }
     
@@ -51,16 +44,23 @@ class AddReminderView: UIView, UITextViewDelegate {
         backgroundColor = .appBg
     }
     
-    private func setupTextView() {
+    private func createTextView() {
         textView.delegate = self
         textView.font = .systemFont(ofSize: 18)
         textView.textColor = .label
         textView.borderStyle = .none
+        textView.textContainer.lineFragmentPadding = 0
+        textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         textView.backgroundColor = .bgCell
         textView.isScrollEnabled = false
         textView.layer.cornerRadius = 16
         textView.layer.masksToBounds = true
         
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.textView.resignFirstResponder()
+      
     }
     
     private func setConstraints() {
@@ -107,11 +107,10 @@ class AddReminderView: UIView, UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         let fittingSize = CGSize(width: textView.frame.width, height: .greatestFiniteMagnitude)
             let newSize = textView.sizeThatFits(fittingSize)
-
             let clampedHeight = min(max(newSize.height, 200), 300)
             textView.isScrollEnabled = newSize.height > 300
             textViewHeightConstraint.constant = clampedHeight
-        layoutIfNeeded()
+       layoutIfNeeded()
     }
     
     required init?(coder: NSCoder) {

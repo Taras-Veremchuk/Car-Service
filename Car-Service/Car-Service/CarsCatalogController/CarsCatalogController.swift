@@ -17,12 +17,16 @@ final class CarsCatalogController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(mainView)
         title = "Your Cars"
+        setupViews()
+    }
+    
+    private func setupViews() {
+        view.addSubview(mainView)
         mainView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             mainView.topAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.topAnchor),
+                equalTo: view.topAnchor),
             mainView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             mainView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             mainView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -30,7 +34,6 @@ final class CarsCatalogController: UIViewController {
         mainView.tableView.dataSource = self
         mainView.tableView.delegate = self
     }
-    
 }
 
 extension CarsCatalogController: UITableViewDataSource, UITableViewDelegate {

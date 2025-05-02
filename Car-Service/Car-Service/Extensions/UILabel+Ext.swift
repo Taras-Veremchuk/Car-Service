@@ -10,7 +10,7 @@ import UIKit
 extension UILabel {
     convenience init(
         title: String = "", textColor: UIColor = .black, fontSize: CGFloat,
-        lines: Int = 0, isBold: Bool = false
+        lines: Int = 1, isBold: Bool = false
     ) {
         self.init()
         let coeff: CGFloat = UIScreen.main.bounds.height / 874.0

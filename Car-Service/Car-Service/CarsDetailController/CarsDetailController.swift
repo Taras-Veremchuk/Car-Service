@@ -28,8 +28,8 @@ final class CarsDetailController: UIViewController {
         setupDelegates()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         mainView.updateTableViewHeight(reminders.count)
     }
     
@@ -135,7 +135,14 @@ extension CarsDetailController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension CarsDetailController: CarsDetailViewDelegate {
-    func didTapPlusButton() {
+    func didTapSeeMoreButton() {
+        let vc = ServicingController()
+//        vc.delegate = self
+//        vc.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func didTapAddButton() {
         let vc = AddReminderController()
         vc.delegate = self
         vc.hidesBottomBarWhenPushed = true
@@ -148,3 +155,4 @@ extension CarsDetailController: AddReminderViewControllerDelegate {
         reminders.insert(reminder, at: 0)
     }
 }
+

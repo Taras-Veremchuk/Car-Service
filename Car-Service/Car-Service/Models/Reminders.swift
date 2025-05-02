@@ -9,7 +9,6 @@ import UIKit
 
 struct Reminders: Identifiable {
     var id: String = UUID().uuidString
-    
     let date: Date
     let text: String
     

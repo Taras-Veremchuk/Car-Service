@@ -20,7 +20,8 @@ final class ReminderDetailView: UIView {
     
     private func setViews() {
         backgroundColor = .white
-//        textLabel.numberOfLines 
+        textLabel.numberOfLines = 0
+//        textLabel.numberOfLines
     }
     
     func setupView(_ reminder: Reminders) {

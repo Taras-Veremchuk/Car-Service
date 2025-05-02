@@ -8,36 +8,21 @@
 import UIKit
 
 protocol CarsDetailViewDelegate: AnyObject {
-    func didTapPlusButton()
+    func didTapSeeMoreButton()
+    func didTapAddButton()
 }
 
 final class CarsDetailView: UIView {
     weak var delegate: CarsDetailViewDelegate?
     private let scrollView = UIScrollView()
     private let containerView = UIView()
-    private let seatsView = CarInfoView(infoType: .seats)
-    private let fuelTypeView = CarInfoView(infoType: .fuelType)
-    private let transmissionView = CarInfoView(infoType: .transmission)
-    private let infoView = CarDataView(infoType: .information)
-    private let servicingView = CarDataView(infoType: .servicing)
     private let lineView = SplitLineView()
     private let secondLineView = SplitLineView()
     private let thirdLineView = SplitLineView()
-    private let titleLabel = UILabel(title: "Car", textColor: .black, fontSize: 28, isBold: true)
-    private let elementOfStackSize: CGFloat = 100
+    
     private let backView = UIView()
     private let regNumLabel = UILabel(title: "ST40493", textColor: .black, fontSize: 20, isBold: true)
-    private let headingLabel = UILabel(title: "Reminders", textColor: .black, fontSize: 22, lines: 1, isBold: true)
-    private let plusReminderBtn: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
-        button.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 42), forImageIn: .normal)
-        button.tintColor = .gray
-        button.backgroundColor = .clear
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    private var tableViewHeightConstraint: NSLayoutConstraint?
+    
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -50,7 +35,39 @@ final class CarsDetailView: UIView {
         collectionView.register(ImgCell.self, forCellWithReuseIdentifier: ImgCell.reusedID)
         return collectionView }()
     var pageControl = UIPageControl()
+    
+    private let titleLabel = UILabel(title: "Car", textColor: .black, fontSize: 28, isBold: true)
+    
+    private let transmissionView = CarInfoView(infoType: .transmission)
+    private let fuelTypeView = CarInfoView(infoType: .fuelType)
+    private let seatsView = CarInfoView(infoType: .seats)
+    private let elementOfStackSize: CGFloat = 100
+    
+    private let infoView = CarDataView(infoType: .information)
+    private let servicingView = CarDataView(infoType: .servicing)
+    private let seeMoreServicingBtn: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "arrow.right"), for: .normal)
+        button.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 42), forImageIn: .normal)
+        button.tintColor = .black
+        button.backgroundColor = .clear
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private let headingLabel = UILabel(title: "Reminders", textColor: .black, fontSize: 22, lines: 1, isBold: true)
+    
     let tableView = UITableView()
+    private var tableViewHeightConstraint: NSLayoutConstraint?
+    private let addReminderBtn: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
+        button.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 42), forImageIn: .normal)
+        button.tintColor = .gray
+        button.backgroundColor = .clear
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     
     init() {
         super.init(frame: .zero)
@@ -58,22 +75,34 @@ final class CarsDetailView: UIView {
         setViews()
         setConstraints()
         setupPageControl()
-        
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.alwaysBounceVertical = true
+        setupScrollView()
         setupTableView()
         configurePlusBtn()
+        configureSeeMoreBtn()
     }
     
     private func configurePlusBtn() {
-        plusReminderBtn.addTarget(
+        addReminderBtn.addTarget(
             self, action: #selector(onPlus), for: .touchUpInside)
     }
     @objc private func onPlus() {
-        delegate?.didTapPlusButton()
+        delegate?.didTapAddButton()
     }
-
+    
+    private func configureSeeMoreBtn() {
+        seeMoreServicingBtn.addTarget(
+            self, action: #selector(onSeeMore), for: .touchUpInside)
+    }
+    @objc private func onSeeMore() {
+        delegate?.didTapSeeMoreButton()
+    }
+    
+    private func setupScrollView() {
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.alwaysBounceVertical = true
+    }
+    
     private func setupTableView() {
         tableView.register(ReminderCell.self, forCellReuseIdentifier: ReminderCell.reuseID)
         tableView.separatorStyle = .none
@@ -190,7 +219,6 @@ final class CarsDetailView: UIView {
             stack.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 20),
             stack.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -20)
         ])
-        
         NSLayoutConstraint.activate([
             fuelTypeView.widthAnchor.constraint(equalToConstant: elementOfStackSize),
             fuelTypeView.heightAnchor.constraint(equalToConstant: elementOfStackSize),
@@ -230,6 +258,15 @@ final class CarsDetailView: UIView {
             servicingView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -20)
         ])
         
+        containerView.addSubview(seeMoreServicingBtn)
+        NSLayoutConstraint.activate([
+            seeMoreServicingBtn.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -20),
+            seeMoreServicingBtn.bottomAnchor.constraint(equalTo: servicingView.bottomAnchor),
+            seeMoreServicingBtn.widthAnchor.constraint(equalToConstant: 38),
+            seeMoreServicingBtn.heightAnchor.constraint(equalToConstant: 38)
+        ])
+        
+        
         containerView.addSubview(thirdLineView)
         NSLayoutConstraint.activate([
             thirdLineView.topAnchor.constraint(equalTo: servicingView.bottomAnchor),
@@ -248,7 +285,6 @@ final class CarsDetailView: UIView {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: 0)
         tableViewHeightConstraint?.isActive = true
-        
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: headingLabel.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
@@ -256,13 +292,12 @@ final class CarsDetailView: UIView {
             tableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
         ])
         
-        containerView.addSubview(plusReminderBtn)
- 
+        containerView.addSubview(addReminderBtn)
         NSLayoutConstraint.activate([
-            plusReminderBtn.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -20),
-            plusReminderBtn.centerYAnchor.constraint(equalTo: headingLabel.centerYAnchor),
-            plusReminderBtn.widthAnchor.constraint(equalToConstant: 42),
-            plusReminderBtn.heightAnchor.constraint(equalToConstant: 42),
+            addReminderBtn.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -20),
+            addReminderBtn.topAnchor.constraint(equalTo: thirdLineView.bottomAnchor, constant: 8),
+            addReminderBtn.widthAnchor.constraint(equalToConstant: 42),
+            addReminderBtn.heightAnchor.constraint(equalToConstant: 42),
         ])
     }
     

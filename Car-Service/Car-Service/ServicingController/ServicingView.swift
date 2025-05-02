@@ -1,23 +1,23 @@
 //
-//  CarsCatalogView.swift
+//  ServicingView.swift
 //  Car-Service
 //
-//  Created by Taras Veremchuk on 13.03.2025.
+//  Created by Taras Veremchuk on 02.05.2025.
 //
 
 import UIKit
 
-final class CarsCatalogView: UIView {
+class ServicingView: UIView {
     let tableView = UITableView()
     
     init() {
         super.init(frame: .zero)
-        backgroundColor = .white
         setConstraints()
         setupTableView()
     }
+    
     private func setupTableView() {
-        tableView.register(CarCell.self, forCellReuseIdentifier: CarCell.reuseID)
+        tableView.register(ServiceCell.self, forCellReuseIdentifier: ServiceCell.reuseID)
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.showsHorizontalScrollIndicator = false
