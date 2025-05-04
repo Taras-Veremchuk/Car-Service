@@ -260,10 +260,10 @@ final class CarsDetailView: UIView {
         
         containerView.addSubview(seeMoreServicingBtn)
         NSLayoutConstraint.activate([
-            seeMoreServicingBtn.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -20),
-            seeMoreServicingBtn.bottomAnchor.constraint(equalTo: servicingView.bottomAnchor),
+            seeMoreServicingBtn.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -30),
+            seeMoreServicingBtn.bottomAnchor.constraint(equalTo: servicingView.bottomAnchor, constant: -10),
             seeMoreServicingBtn.widthAnchor.constraint(equalToConstant: 38),
-            seeMoreServicingBtn.heightAnchor.constraint(equalToConstant: 38)
+            seeMoreServicingBtn.heightAnchor.constraint(equalToConstant: 26)
         ])
         
         

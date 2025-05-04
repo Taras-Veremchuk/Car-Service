@@ -23,6 +23,8 @@ class ImgCell: UICollectionViewCell {
     
     private func setViews() {
         backgroundColor = .white
+        carImageView.layer.cornerRadius = 8
+        carImageView.clipsToBounds = true
     }
 
     
@@ -33,8 +35,8 @@ class ImgCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             carImageView.topAnchor.constraint(equalTo: topAnchor),
             carImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            carImageView.leftAnchor.constraint(equalTo: leftAnchor),
-            carImageView.rightAnchor.constraint(equalTo: rightAnchor)
+            carImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 10),
+            carImageView.rightAnchor.constraint(equalTo: rightAnchor, constant: -10)
         ])
     }
     

@@ -25,6 +25,7 @@
 		8EB9B9462DC51EFF00025923 /* ServicingDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9B9452DC51EFF00025923 /* ServicingDetailView.swift */; };
 		8EBC0C602D88B6DF003243F2 /* ImgCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBC0C5F2D88B6DF003243F2 /* ImgCell.swift */; };
 		8EC367592DBFFE01001AB989 /* UIButton+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC367582DBFFE01001AB989 /* UIButton+Ext.swift */; };
+		8ECF9B042DC7F1C60034057E /* UITextView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECF9B032DC7F1C60034057E /* UITextView+Ext.swift */; };
 		8EEFB4402D836E8A00B590E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEFB4382D836E8A00B590E9 /* AppDelegate.swift */; };
 		8EEFB4412D836E8A00B590E9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEFB43D2D836E8A00B590E9 /* SceneDelegate.swift */; };
 		8EEFB4422D836E8A00B590E9 /* CarsCatalogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEFB43E2D836E8A00B590E9 /* CarsCatalogController.swift */; };
@@ -61,6 +62,7 @@
 		8EB9B9452DC51EFF00025923 /* ServicingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicingDetailView.swift; sourceTree = "<group>"; };
 		8EBC0C5F2D88B6DF003243F2 /* ImgCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgCell.swift; sourceTree = "<group>"; };
 		8EC367582DBFFE01001AB989 /* UIButton+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Ext.swift"; sourceTree = "<group>"; };
+		8ECF9B032DC7F1C60034057E /* UITextView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Ext.swift"; sourceTree = "<group>"; };
 		8EEFB3E92D836C5800B590E9 /* Car-Service.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Car-Service.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EEFB4382D836E8A00B590E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8EEFB4392D836E8A00B590E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 				8EEFB4992D876AE700B590E9 /* UIViewController+Ext.swift */,
 				8EB4EEF52D8B6400005DCCE5 /* UIStackView+Ext.swift */,
 				8EC367582DBFFE01001AB989 /* UIButton+Ext.swift */,
+				8ECF9B032DC7F1C60034057E /* UITextView+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 				8EC367592DBFFE01001AB989 /* UIButton+Ext.swift in Sources */,
 				8EB9B9462DC51EFF00025923 /* ServicingDetailView.swift in Sources */,
 				8EEFB49A2D876AE700B590E9 /* UIViewController+Ext.swift in Sources */,
+				8ECF9B042DC7F1C60034057E /* UITextView+Ext.swift in Sources */,
 				8EEFB44E2D83772600B590E9 /* MainTabBarController.swift in Sources */,
 				8EBC0C602D88B6DF003243F2 /* ImgCell.swift in Sources */,
 				8EB4EEF42D8B5726005DCCE5 /* CarInfoView.swift in Sources */,
@@ -372,6 +376,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9N8479NDUR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Car-Service/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -403,6 +408,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9N8479NDUR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Car-Service/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

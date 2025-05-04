@@ -12,6 +12,7 @@ class ServicingView: UIView {
     
     init() {
         super.init(frame: .zero)
+        backgroundColor = .white
         setConstraints()
         setupTableView()
     }

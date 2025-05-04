@@ -13,13 +13,13 @@ class AddReminderView: UIView, UITextViewDelegate {
     let datePicker = UIDatePicker()
     private var textViewHeightConstraint: NSLayoutConstraint!
     private let notesTitleLabel = UILabel(title: "Notes", textColor: .gray, fontSize: 16)
-    let textView = UITextView()
+    let textView = UITextView(font: .systemFont(ofSize: 18), textColor: .label)
     let createReminderBtn = UIButton(title: "Add Reminder", bgColor: UIColor(named: "btnColor")!)
     
     init() {
         super.init(frame: .zero)
         setViews()
-        createTextView()
+        textView.delegate = self
         setConstraints()
         configureDatePicker()
     }
@@ -44,23 +44,8 @@ class AddReminderView: UIView, UITextViewDelegate {
         backgroundColor = .appBg
     }
     
-    private func createTextView() {
-        textView.delegate = self
-        textView.font = .systemFont(ofSize: 18)
-        textView.textColor = .label
-        textView.borderStyle = .none
-        textView.textContainer.lineFragmentPadding = 0
-        textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        textView.backgroundColor = .bgCell
-        textView.isScrollEnabled = false
-        textView.layer.cornerRadius = 16
-        textView.layer.masksToBounds = true
-        
-    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.textView.resignFirstResponder()
-      
     }
     
     private func setConstraints() {
