@@ -89,6 +89,7 @@ class AddReminderView: UIView, UITextViewDelegate {
         ])
     }
     
+    // MARK: - UITextViewDelegate
     func textViewDidChange(_ textView: UITextView) {
         let fittingSize = CGSize(width: textView.frame.width, height: .greatestFiniteMagnitude)
             let newSize = textView.sizeThatFits(fittingSize)

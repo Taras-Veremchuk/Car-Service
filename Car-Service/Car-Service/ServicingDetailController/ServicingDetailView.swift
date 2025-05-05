@@ -8,6 +8,9 @@
 import UIKit
 
 final class ServicingDetailView: UIView, UITextViewDelegate, UITextFieldDelegate {
+    private let scrollView = UIScrollView()
+    private let containerView = UIView()
+    
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -21,7 +24,18 @@ final class ServicingDetailView: UIView, UITextViewDelegate, UITextFieldDelegate
         return collectionView }()
     var pageControl = UIPageControl()
     
-    private let titleTextField = UITextField(placeholder: "Title")
+    private let titleTextField: UITextField = {
+        let textField = UITextField()
+        textField.textColor = .black
+        textField.borderStyle = .none
+        textField.font = .boldSystemFont(ofSize: 24)
+        textField.attributedPlaceholder = NSAttributedString(
+            string: "Title",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
+        )
+        
+        return textField
+    }()
     
     private let dateLabel = UILabel(title: "Completed date", textColor: .gray, fontSize: 16)
     private let dateView = UITextView(font: .systemFont(ofSize: 18), textColor: .label, maxNumberOfLines: 1)
@@ -33,16 +47,16 @@ final class ServicingDetailView: UIView, UITextViewDelegate, UITextFieldDelegate
     private let priceView = UITextView(font: .systemFont(ofSize: 18), textColor: .label, maxNumberOfLines: 1)
     
     private let textLabel = UILabel(title: "Description", textColor: .gray, fontSize: 16)
-    private var textViewHeightConstraint: NSLayoutConstraint!
     private let textView = UITextView(font: .systemFont(ofSize: 18), textColor: .label)
     
     init() {
         super.init(frame: .zero)
         backgroundColor = .white
-        setViews()
-        setConstraints()
+        setupScrollView()
         setupPageControl()
-        createTitleTextField()
+        setConstraints()
+        setupKeyboardObservers()
+        setupTapToDismissKeyboard()
         titleTextField.delegate = self
         dateView.delegate = self
         mileageView.delegate = self
@@ -54,23 +68,16 @@ final class ServicingDetailView: UIView, UITextViewDelegate, UITextFieldDelegate
         fatalError("init(coder:) has not been implemented")
     }
     
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        self.titleView.resignFirstResponder()
-//        self.dateView.resignFirstResponder()
-//        self.mileageView.resignFirstResponder()
-//        self.priceView.resignFirstResponder()
-//        self.textView.resignFirstResponder()
-//    }
-
-    private func createTitleTextField() {
-        titleTextField.borderStyle = .none
-        titleTextField.backgroundColor = .clear
-        titleTextField.font = .boldSystemFont(ofSize: 28)
-        titleTextField.textAlignment = .left
-        
+    private func setupScrollView() {
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.alwaysBounceVertical = true
+        scrollView.isUserInteractionEnabled = true
+        scrollView.isScrollEnabled = true
     }
-    
+
     private func setupPageControl() {
+        pageControl.backgroundStyle = .minimal
         pageControl.addTarget(self, action: #selector(pageControlTapped(_:)), for: .valueChanged)
     }
     
@@ -81,146 +88,187 @@ final class ServicingDetailView: UIView, UITextViewDelegate, UITextFieldDelegate
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
     
-    private func setViews() {
-        pageControl.backgroundStyle = .minimal
-    }
-    
-    private func setConstraints() {
-        addSubview(collectionView)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            collectionView.heightAnchor.constraint(equalToConstant: 300)
-        ])
-        
-        addSubview(pageControl)
-        pageControl.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            pageControl.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: -20),
-            pageControl.centerXAnchor.constraint(equalTo: centerXAnchor),
-            pageControl.widthAnchor.constraint(equalToConstant: 80),
-            pageControl.heightAnchor.constraint(equalToConstant: 15)
-        ])
-        
-        addSubview(titleTextField)
-        titleTextField.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            titleTextField.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 20),
-            titleTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20)
-        ])
-        
-        addSubview(dateLabel)
-        dateLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            dateLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            dateLabel.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 16)
-        ])
-        addSubview(dateView)
-        dateView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            dateView.heightAnchor.constraint(equalToConstant: 40),
-            dateView.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 12),
-            dateView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            dateView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
-        ])
-        
-        addSubview(mileageLabel)
-        mileageLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            mileageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            mileageLabel.topAnchor.constraint(equalTo: dateView.bottomAnchor, constant: 16)
-        ])
-        addSubview(mileageView)
-        mileageView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            mileageView.heightAnchor.constraint(equalToConstant: 40),
-            mileageView.topAnchor.constraint(equalTo: mileageLabel.bottomAnchor, constant: 12),
-            mileageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            mileageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
-        ])
-        
-        addSubview(priceLabel)
-        priceLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            priceLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            priceLabel.topAnchor.constraint(equalTo: mileageView.bottomAnchor, constant: 16)
-        ])
-        addSubview(priceView)
-        priceView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            priceView.heightAnchor.constraint(equalToConstant: 40),
-            priceView.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 12),
-            priceView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            priceView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
-        ])
-        
-        addSubview(textLabel)
-        textLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            textLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            textLabel.topAnchor.constraint(equalTo: priceView.bottomAnchor, constant: 16)
-        ])
-        addSubview(textView)
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textViewHeightConstraint = textView.heightAnchor.constraint(equalToConstant: 200)
-        NSLayoutConstraint.activate([
-            textViewHeightConstraint,
-            textView.topAnchor.constraint(equalTo: textLabel.bottomAnchor, constant: 12),
-            textView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            textView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
-        ])
-    }
-    
-    func textViewDidChange(_ textView: UITextView) {
-        let fittingSize = CGSize(width: textView.frame.width, height: .greatestFiniteMagnitude)
-            let newSize = textView.sizeThatFits(fittingSize)
-            let clampedHeight = min(max(newSize.height, 200), 300)
-            textView.isScrollEnabled = newSize.height > 300
-            textViewHeightConstraint.constant = clampedHeight
-       layoutIfNeeded()
-    }
-    
     func setupView(_ service: Servicing) {
         
     }
     
-    //MARK: - UITextFieldDelegate
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        print("textFieldShouldBeginEditing ")
-        return true
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
+    private func setConstraints() {
+        addSubview(scrollView)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
         
-    }
-    
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        true
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
+        scrollView.addSubview(containerView)
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            containerView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            containerView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            containerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+        ])
         
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+        containerView.addSubview(collectionView)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            collectionView.heightAnchor.constraint(equalToConstant: 300)
+        ])
         
-    }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        true
-    }
-    
-    func textFieldDidChangeSelection(_ textField: UITextField) {
+        containerView.addSubview(pageControl)
+        pageControl.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            pageControl.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: -20),
+            pageControl.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            pageControl.widthAnchor.constraint(equalToConstant: 80),
+            pageControl.heightAnchor.constraint(equalToConstant: 15)
+        ])
         
+        containerView.addSubview(titleTextField)
+        titleTextField.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            titleTextField.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 20),
+            titleTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20)
+        ])
+        
+        containerView.addSubview(dateLabel)
+        dateLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            dateLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            dateLabel.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 16)
+        ])
+        containerView.addSubview(dateView)
+        dateView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            dateView.heightAnchor.constraint(equalToConstant: 40),
+            dateView.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 12),
+            dateView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            dateView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20)
+        ])
+        
+        containerView.addSubview(mileageLabel)
+        mileageLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            mileageLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            mileageLabel.topAnchor.constraint(equalTo: dateView.bottomAnchor, constant: 16)
+        ])
+        containerView.addSubview(mileageView)
+        mileageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            mileageView.heightAnchor.constraint(equalToConstant: 40),
+            mileageView.topAnchor.constraint(equalTo: mileageLabel.bottomAnchor, constant: 12),
+            mileageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            mileageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20)
+        ])
+        
+        containerView.addSubview(priceLabel)
+        priceLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            priceLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            priceLabel.topAnchor.constraint(equalTo: mileageView.bottomAnchor, constant: 16)
+        ])
+        containerView.addSubview(priceView)
+        priceView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            priceView.heightAnchor.constraint(equalToConstant: 40),
+            priceView.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 12),
+            priceView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            priceView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20)
+        ])
+        
+        containerView.addSubview(textLabel)
+        textLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            textLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            textLabel.topAnchor.constraint(equalTo: priceView.bottomAnchor, constant: 16)
+        ])
+        containerView.addSubview(textView)
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            textView.heightAnchor.constraint(equalToConstant: 100),
+            textView.topAnchor.constraint(equalTo: textLabel.bottomAnchor, constant: 12),
+            textView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            textView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
+            textView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+        ])
+    }
+    // MARK: - UITextViewDelegate
+    func textViewDidChange(_ textView: UITextView) {
+        let size = CGSize(width: textView.frame.width, height: .greatestFiniteMagnitude)
+        let estimatedSize = textView.sizeThatFits(size)
+        if estimatedSize.height > 100 {
+            textView.isScrollEnabled = true
+        } else {
+            textView.isScrollEnabled = false
+            scrollToCaret()
+        }
     }
 
-    func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        true
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        textView.isScrollEnabled = false
+        return true
     }
-    
+    func scrollToCaret() {
+        guard let selectedRange = textView.selectedTextRange else { return }
+        let caretRect = textView.caretRect(for: selectedRange.end)
+        textView.scrollRectToVisible(caretRect, animated: true)
+    }
+    //MARK: - SetupKeyboar
+    private func setupKeyboardObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
+                                               name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    @objc private func keyboardWillShow(notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+        
+        let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height + 20, right: 0)
+        scrollView.contentInset = contentInset
+        scrollView.scrollIndicatorInsets = contentInset
+    }
+
+    @objc private func keyboardWillHide(notification: Notification) {
+        scrollView.contentInset = .zero
+        scrollView.scrollIndicatorInsets = .zero
+    }
+
+    private func setupTapToDismissKeyboard() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        scrollView.addGestureRecognizer(tapGesture)
+    }
+
+    @objc private func dismissKeyboard() {
+        self.endEditing(true)
+    }
+    //MARK: - UITextFieldDelegate
+    func textField(_ textField: UITextField,
+                      shouldChangeCharactersIn range: NSRange,
+                      replacementString string: String) -> Bool {
+           let currentText = textField.text ?? ""
+           guard let stringRange = Range(range, in: currentText) else {
+               return false
+           }
+           let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+           return updatedText.count <= 25
+       }
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        true
+        if textField == titleTextField {
+            self.titleTextField.resignFirstResponder()
+        }
+        return true
+    }
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
