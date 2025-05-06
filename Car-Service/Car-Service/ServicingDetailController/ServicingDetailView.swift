@@ -11,6 +11,8 @@ final class ServicingDetailView: UIView, UITextViewDelegate, UITextFieldDelegate
     private let scrollView = UIScrollView()
     private let containerView = UIView()
     
+    let saveButton = UIButton(type: .system)
+    
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -33,18 +35,37 @@ final class ServicingDetailView: UIView, UITextViewDelegate, UITextFieldDelegate
             string: "Title",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
         )
-        
         return textField
     }()
     
     private let dateLabel = UILabel(title: "Completed date", textColor: .gray, fontSize: 16)
-    private let dateView = UITextView(font: .systemFont(ofSize: 18), textColor: .label, maxNumberOfLines: 1)
+    private let datePicker = UIDatePicker()
     
     private let mileageLabel = UILabel(title: "Mileage", textColor: .gray, fontSize: 16)
-    private let mileageView = UITextView(font: .systemFont(ofSize: 18), textColor: .label, maxNumberOfLines: 1)
+    private let mileageTextField: UITextField = {
+        let textField = UITextField()
+        textField.textColor = .black
+        textField.borderStyle = .none
+        textField.font = .boldSystemFont(ofSize: 18)
+        textField.attributedPlaceholder = NSAttributedString(
+            string: "km",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
+        )
+        return textField
+    }()
     
     private let priceLabel = UILabel(title: "Price", textColor: .gray, fontSize: 16)
-    private let priceView = UITextView(font: .systemFont(ofSize: 18), textColor: .label, maxNumberOfLines: 1)
+    private let priceTextField: UITextField = {
+        let textField = UITextField()
+        textField.textColor = .black
+        textField.borderStyle = .none
+        textField.font = .boldSystemFont(ofSize: 18)
+        textField.attributedPlaceholder = NSAttributedString(
+            string: "$",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
+        )
+        return textField
+    }()
     
     private let textLabel = UILabel(title: "Description", textColor: .gray, fontSize: 16)
     private let textView = UITextView(font: .systemFont(ofSize: 18), textColor: .label)
@@ -57,15 +78,32 @@ final class ServicingDetailView: UIView, UITextViewDelegate, UITextFieldDelegate
         setConstraints()
         setupKeyboardObservers()
         setupTapToDismissKeyboard()
+        configureDatePicker()
+        setupNavigationSaveButton()
         titleTextField.delegate = self
-        dateView.delegate = self
-        mileageView.delegate = self
-        priceView.delegate = self
+        mileageTextField.delegate = self
+        priceTextField.delegate = self
         textView.delegate = self
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    private func setupNavigationSaveButton() {
+        var config = UIButton.Configuration.filled()
+        config.title = "save"
+        config.baseForegroundColor = .black
+        config.baseBackgroundColor = .white
+        config.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 12, bottom: 5, trailing: 12)
+        config.cornerStyle = .medium
+        saveButton.configuration = config
+        saveButton.layer.borderWidth = 1
+        saveButton.layer.borderColor = UIColor.gray.cgColor
+        saveButton.layer.cornerRadius = 8
+        saveButton.addTarget(self, action: #selector(saveTapped), for: .touchUpInside)
+    }
+    
+    @objc private func saveTapped() {
+        print("Save button tapped")
     }
     
     private func setupScrollView() {
@@ -92,6 +130,21 @@ final class ServicingDetailView: UIView, UITextViewDelegate, UITextFieldDelegate
         
     }
     
+    // MARK: - UIDatePicker
+    private func configureDatePicker() {
+        datePicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
+        datePicker.datePickerMode = .date
+        datePicker.locale = .current
+        datePicker.preferredDatePickerStyle = .compact
+        datePicker.minimumDate = Date()
+    }
+    @objc private func dateChanged(object: UIDatePicker) {
+        if object.isEqual(self.datePicker){
+            let formatter = DateFormatter()
+            formatter.dateStyle = .short
+        }
+    }
+    // MARK: - Constraints
     private func setConstraints() {
         addSubview(scrollView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -143,50 +196,48 @@ final class ServicingDetailView: UIView, UITextViewDelegate, UITextFieldDelegate
             dateLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             dateLabel.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 16)
         ])
-        containerView.addSubview(dateView)
-        dateView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(datePicker)
+        datePicker.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            dateView.heightAnchor.constraint(equalToConstant: 40),
-            dateView.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 12),
-            dateView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            dateView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20)
+            datePicker.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 12),
+            datePicker.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20)
         ])
         
         containerView.addSubview(mileageLabel)
         mileageLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             mileageLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            mileageLabel.topAnchor.constraint(equalTo: dateView.bottomAnchor, constant: 16)
+            mileageLabel.topAnchor.constraint(equalTo: datePicker.bottomAnchor, constant: 16)
         ])
-        containerView.addSubview(mileageView)
-        mileageView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(mileageTextField)
+        mileageTextField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            mileageView.heightAnchor.constraint(equalToConstant: 40),
-            mileageView.topAnchor.constraint(equalTo: mileageLabel.bottomAnchor, constant: 12),
-            mileageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            mileageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20)
+            mileageTextField.heightAnchor.constraint(equalToConstant: 40),
+            mileageTextField.topAnchor.constraint(equalTo: mileageLabel.bottomAnchor, constant: 12),
+            mileageTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            mileageTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20)
         ])
         
         containerView.addSubview(priceLabel)
         priceLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             priceLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            priceLabel.topAnchor.constraint(equalTo: mileageView.bottomAnchor, constant: 16)
+            priceLabel.topAnchor.constraint(equalTo: mileageTextField.bottomAnchor, constant: 16)
         ])
-        containerView.addSubview(priceView)
-        priceView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(priceTextField)
+        priceTextField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            priceView.heightAnchor.constraint(equalToConstant: 40),
-            priceView.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 12),
-            priceView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            priceView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20)
+            priceTextField.heightAnchor.constraint(equalToConstant: 40),
+            priceTextField.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 12),
+            priceTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            priceTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20)
         ])
         
         containerView.addSubview(textLabel)
         textLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             textLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            textLabel.topAnchor.constraint(equalTo: priceView.bottomAnchor, constant: 16)
+            textLabel.topAnchor.constraint(equalTo: priceTextField.bottomAnchor, constant: 16)
         ])
         containerView.addSubview(textView)
         textView.translatesAutoresizingMaskIntoConstraints = false

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddReminderView: UIView, UITextViewDelegate {
+final class AddReminderView: UIView, UITextViewDelegate {
     private let startLabel = UILabel(title: "Start", textColor: .gray, fontSize: 16, isBold: false)
     
     let datePicker = UIDatePicker()
@@ -88,7 +88,6 @@ class AddReminderView: UIView, UITextViewDelegate {
             createReminderBtn.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40)
         ])
     }
-    
     // MARK: - UITextViewDelegate
     func textViewDidChange(_ textView: UITextView) {
         let fittingSize = CGSize(width: textView.frame.width, height: .greatestFiniteMagnitude)

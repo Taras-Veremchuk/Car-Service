@@ -17,6 +17,11 @@ class ServicingDetailController: UIViewController {
         setupDelegates()
     }
     
+    private func setupNavigationBar() {
+        let barButtonItem = UIBarButtonItem(customView: mainView.saveButton)
+        navigationItem.rightBarButtonItem = barButtonItem
+    }
+    
     private func setupViews() {
         view.addSubview(mainView)
         mainView.translatesAutoresizingMaskIntoConstraints = false

@@ -107,8 +107,8 @@
 		8EB4EEF22D8B569A005DCCE5 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				8EBC0C5F2D88B6DF003243F2 /* ImgCell.swift */,
 				8EB8484B2D9342B3004C0020 /* ReminderCell.swift */,
+				8EBC0C5F2D88B6DF003243F2 /* ImgCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
